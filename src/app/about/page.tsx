@@ -1,8 +1,9 @@
 import { AboutSlides } from "@/components/AboutSlides";
-import { data } from "@/data/data";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: `About — ${data.brand}`,
+  title: "About",
 };
 
 export default function AboutPage() {

@@ -14,20 +14,44 @@ and **Tailwind CSS**.
 
 ```bash
 npm install
+cp .env.example .env.local   # then fill in MONGODB_URI and ADMIN_PASSWORD
 npm run dev
 ```
 
 Then open http://localhost:3000.
 
+Environment variables (see `.env.example`):
+
+- `MONGODB_URI` — MongoDB Atlas connection string. When unset, the site runs
+  read-only from the built-in defaults in `data.ts`.
+- `ADMIN_PASSWORD` — password for the `/admin` panel. When unset, admin is off.
+- `ADMIN_SECRET` — optional secret used to sign the admin session cookie.
+
 ## Where to edit things
 
-| What | File |
+| What | Where |
 | --- | --- |
-| **All site content / copy** (name, intro, socials, email, nav) | `src/data/data.ts` |
-| **Themes** (colors, add/remove/edit) | `src/themes/themes.ts` |
-| **Your photo** | drop an image in `public/` and update `home.photo.src` in `data.ts` |
+| **All site content / copy** (name, intro, socials, about slides, projects) | the **/admin** panel (saved to MongoDB) |
+| **Default / seed content** (used when no DB is set) | `src/data/data.ts` |
+| **Themes** (colors, frame style, add/remove/edit) | `src/themes/themes.ts` |
+| **Your photo** | upload anywhere and paste the URL in /admin, or drop a file in `public/` and set `home.photo.src` |
 
-> No copy is hard-coded in components — everything renders from `data.ts`.
+> No copy is hard-coded in components — everything renders from the content store
+> (MongoDB), falling back to the defaults in `data.ts`.
+
+## Admin panel & content (MongoDB)
+
+Content is stored in MongoDB and edited through a built-in admin panel:
+
+- Visit **`/admin`** and log in with `ADMIN_PASSWORD`.
+- Edit everything — homepage, socials, about slides, and projects (full CRUD,
+  including per-project Visit / GitHub / Live demo links, tags, category, and
+  detail sections) — then **Save**.
+- `data.ts` is the **seed + fallback**: on first read an empty database is
+  seeded with it, and if `MONGODB_URI` is missing the site still renders from it
+  (the admin panel is then read-only).
+
+Content pages render dynamically, so saved changes appear on the next request.
 
 ## Themes
 
@@ -35,9 +59,14 @@ Three themes ship out of the box and a visitor can switch between them using the
 swatches in the navbar (the choice is remembered via `localStorage`):
 
 1. **Hey Friends** — an exact match of the Ali Abdaal reference styling
-   (warm cream, coral CTA, teal accent, sunny yellow photo blob).
-2. **Midnight** — a custom dark mode (deep slate, indigo CTA, cyan accent).
-3. **Pop** — a custom bold & colorful look (lavender, hot-pink CTA, electric blue).
+   (warm cream, coral CTA, teal accent, sunny yellow photo **blob**).
+2. **Midnight** — a custom dark mode (deep slate, indigo CTA, cyan accent) with
+   a glowing **ring** photo frame.
+3. **Pop** — a custom bold & colorful look (lavender, hot-pink CTA, electric
+   blue) with a vivid **gradient** photo frame.
+
+The homepage photo frame style changes with the theme (`frameStyle` in each
+theme: `blob` / `ring` / `gradient`).
 
 ### How theming works
 

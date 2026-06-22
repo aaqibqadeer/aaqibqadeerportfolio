@@ -2,19 +2,19 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { data } from "@/data/data";
+import { useContent } from "./ContentProvider";
 import { icons } from "./Icons";
 
 /**
  * Mobile-only block shown under the photo + description.
  *
- * It replaces the desktop navigation / contact card on small screens with:
- *  - quick action buttons to the About and Portfolio pages
- *  - a "Socials" button that opens a bottom sheet listing every social link
+ * Layout: a dominant "About me" button, with "Portfolio" and "Contact" below.
+ * "Contact" opens a bottom sheet listing every social link (and email).
  *
  * Hidden on md+ where the full navbar and contact card take over.
  */
 export function MobileActions() {
+  const data = useContent();
   const [open, setOpen] = useState(false);
   const { home } = data;
   const socials = data.socials.filter((s) => s.href.trim() !== "");
@@ -37,27 +37,30 @@ export function MobileActions() {
   return (
     <div className="md:hidden">
       <div className="mt-7 flex flex-col gap-3">
+        {/* Dominant primary action */}
+        <Link
+          href="/about"
+          className="rounded-2xl bg-primary px-6 py-4 text-center text-base font-bold text-primary-text shadow-sm transition-transform hover:scale-[1.02]"
+        >
+          About me
+        </Link>
+
+        {/* Two secondary actions */}
         <div className="grid grid-cols-2 gap-3">
           <Link
-            href="/about"
-            className="rounded-full border border-border bg-surface-alt px-5 py-3 text-center text-sm font-semibold text-text transition-colors hover:border-accent"
-          >
-            About me
-          </Link>
-          <Link
             href="/portfolio"
-            className="rounded-full border border-border bg-surface-alt px-5 py-3 text-center text-sm font-semibold text-text transition-colors hover:border-accent"
+            className="rounded-2xl border border-border bg-surface-alt px-5 py-3 text-center text-sm font-semibold text-text transition-colors hover:border-accent"
           >
             Portfolio
           </Link>
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            className="rounded-2xl border border-border bg-surface-alt px-5 py-3 text-center text-sm font-semibold text-text transition-colors hover:border-accent"
+          >
+            Contact
+          </button>
         </div>
-        <button
-          type="button"
-          onClick={() => setOpen(true)}
-          className="rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-text transition-transform hover:scale-[1.02]"
-        >
-          Socials
-        </button>
       </div>
 
       {open && (
@@ -65,7 +68,7 @@ export function MobileActions() {
           className="fixed inset-0 z-50 flex items-end"
           role="dialog"
           aria-modal="true"
-          aria-label="Social links"
+          aria-label="Contact"
         >
           <button
             type="button"
@@ -77,7 +80,7 @@ export function MobileActions() {
             <div className="mx-auto mb-5 h-1.5 w-12 rounded-full bg-border" />
             <div className="mb-4 flex items-center justify-between">
               <h3 className="font-display text-2xl font-semibold text-text">
-                Find me online
+                Get in touch
               </h3>
               <button
                 type="button"

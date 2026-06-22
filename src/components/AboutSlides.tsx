@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { data } from "@/data/data";
+import { useContent } from "./ContentProvider";
 
 /**
  * Full-screen, scroll-snapping About experience.
@@ -13,6 +13,7 @@ import { data } from "@/data/data";
  * visitor orient themselves and jump between panels.
  */
 export function AboutSlides() {
+  const data = useContent();
   const { about } = data;
   const containerRef = useRef<HTMLDivElement>(null);
   const panelRefs = useRef<(HTMLElement | null)[]>([]);

@@ -46,6 +46,14 @@ export type Theme = {
   swatch: string;
   /** Whether this theme is dark (affects a couple of subtle UI choices) */
   isDark: boolean;
+  /**
+   * Visual style of the photo frame on the homepage. Each theme gets a
+   * distinct look:
+   *   blob     - playful rotating organic blob (Hey Friends)
+   *   ring     - glowing circular ring (Midnight)
+   *   gradient - vivid gradient blob (Pop)
+   */
+  frameStyle: "blob" | "ring" | "gradient";
   tokens: ThemeTokens;
 };
 
@@ -59,6 +67,7 @@ const heyFriends: Theme = {
   name: "Hey Friends",
   swatch: "#F4A52A",
   isDark: false,
+  frameStyle: "blob",
   tokens: {
     bg: "#FBF4EA",
     surface: "#F7EEE1",
@@ -82,6 +91,7 @@ const midnight: Theme = {
   name: "Midnight",
   swatch: "#818CF8",
   isDark: true,
+  frameStyle: "ring",
   tokens: {
     bg: "#0E1015",
     surface: "#171A21",
@@ -106,6 +116,7 @@ const pop: Theme = {
   name: "Pop",
   swatch: "#EC4899",
   isDark: false,
+  frameStyle: "gradient",
   tokens: {
     bg: "#F3E8FF",
     surface: "#FDF2FF",

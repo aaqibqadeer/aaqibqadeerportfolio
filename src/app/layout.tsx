@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Inter, Fraunces } from "next/font/google";
 import "./globals.css";
-import { data } from "@/data/data";
 import { themes, defaultThemeId } from "@/themes/themes";
 import { ThemeProvider } from "@/themes/ThemeProvider";
+import { ContentProvider } from "@/components/ContentProvider";
+import { getSiteData } from "@/lib/content";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -17,10 +18,17 @@ const fraunces = Fraunces({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: data.meta.title,
-  description: data.meta.description,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await getSiteData();
+  return {
+    // Home page uses just the brand; other pages render "<Page> — Brand".
+    title: {
+      default: data.brand,
+      template: `%s — ${data.brand}`,
+    },
+    description: data.meta.description,
+  };
+}
 
 /**
  * Blocking script that applies a previously-saved theme before first paint to
@@ -46,18 +54,22 @@ const noFlashScript = `
 })();
 `;
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const content = await getSiteData();
+
   return (
     <html lang="en" className={`${inter.variable} ${fraunces.variable}`}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: noFlashScript }} />
       </head>
       <body className="font-sans">
-        <ThemeProvider>{children}</ThemeProvider>
+        <ContentProvider content={content}>
+          <ThemeProvider>{children}</ThemeProvider>
+        </ContentProvider>
       </body>
     </html>
   );

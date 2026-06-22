@@ -3,26 +3,27 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Navbar } from "@/components/Navbar";
 import { ProjectButtons } from "@/components/ProjectButtons";
-import { data } from "@/data/data";
+import { getSiteData } from "@/lib/content";
 
-/** Pre-render a detail page for every project. */
-export function generateStaticParams() {
-  return data.portfolio.projects.map((p) => ({ slug: p.slug }));
-}
+export const dynamic = "force-dynamic";
 
-export function generateMetadata({ params }: { params: { slug: string } }) {
-  const project = data.portfolio.projects.find((p) => p.slug === params.slug);
-  return {
-    title: project ? `${project.title} — ${data.brand}` : "Project",
-  };
-}
-
-export default function ProjectDetailPage({
+export async function generateMetadata({
   params,
 }: {
   params: { slug: string };
 }) {
-  const project = data.portfolio.projects.find((p) => p.slug === params.slug);
+  const { portfolio } = await getSiteData();
+  const project = portfolio.projects.find((p) => p.slug === params.slug);
+  return { title: project ? project.title : "Project" };
+}
+
+export default async function ProjectDetailPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const { portfolio } = await getSiteData();
+  const project = portfolio.projects.find((p) => p.slug === params.slug);
   if (!project) notFound();
 
   const cover = project.detail.cover ?? project.thumbnail;

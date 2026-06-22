@@ -1,11 +1,14 @@
-import { data } from "@/data/data";
+"use client";
+
+import { useContent } from "./ContentProvider";
 import { icons } from "./Icons";
 
 /**
- * Renders the social link buttons from data.ts. Any social with an empty
- * `href` is skipped, so every link is effectively optional.
+ * Renders the social link buttons from the site content. Any social with an
+ * empty `href` is skipped, so every link is effectively optional.
  */
 export function Socials() {
+  const data = useContent();
   const links = data.socials.filter((s) => s.href.trim() !== "");
   if (links.length === 0) return null;
 

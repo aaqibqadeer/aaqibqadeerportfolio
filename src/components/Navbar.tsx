@@ -1,9 +1,12 @@
+"use client";
+
 import Link from "next/link";
-import { data } from "@/data/data";
+import { useContent } from "./ContentProvider";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 
 /** Top navigation: brand, page links, theme switcher and optional CTA. */
 export function Navbar() {
+  const data = useContent();
   return (
     <header className="w-full">
       <nav className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-4 md:py-6">

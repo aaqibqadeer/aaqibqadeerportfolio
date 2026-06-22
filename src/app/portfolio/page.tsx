@@ -1,14 +1,16 @@
 import { Suspense } from "react";
 import { Navbar } from "@/components/Navbar";
 import { PortfolioBoard } from "@/components/PortfolioBoard";
-import { data } from "@/data/data";
+import { getSiteData } from "@/lib/content";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: `Portfolio — ${data.brand}`,
+  title: "Portfolio",
 };
 
-export default function PortfolioPage() {
-  const { portfolio } = data;
+export default async function PortfolioPage() {
+  const { portfolio } = await getSiteData();
   return (
     <main className="min-h-screen">
       <Navbar />

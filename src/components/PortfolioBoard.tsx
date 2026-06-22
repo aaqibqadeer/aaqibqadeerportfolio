@@ -4,7 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useMemo } from "react";
-import { data, type Project } from "@/data/data";
+import type { Project } from "@/data/data";
+import { useContent } from "./ContentProvider";
 import { ProjectButtons } from "./ProjectButtons";
 
 /**
@@ -14,6 +15,7 @@ import { ProjectButtons } from "./ProjectButtons";
  * so filters are shareable and survive refresh / back-forward navigation.
  */
 export function PortfolioBoard() {
+  const data = useContent();
   const projects = data.portfolio.projects;
   const router = useRouter();
   const pathname = usePathname();

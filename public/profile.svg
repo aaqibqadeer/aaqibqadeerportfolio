@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f7eee1"/>
+      <stop offset="100%" stop-color="#fbd9a6"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="url(#bg)"/>
+  <circle cx="200" cy="160" r="78" fill="#1b1b1b" opacity="0.85"/>
+  <path d="M70 360c0-78 58-132 130-132s130 54 130 132z" fill="#1b1b1b" opacity="0.85"/>
+  <text x="200" y="392" text-anchor="middle" font-family="Georgia, serif" font-size="20" fill="#1b1b1b">Your photo here</text>
+</svg>

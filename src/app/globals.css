@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Default theme values ("Hey Friends").
+ * These are the fallback CSS variables used for server-render and the very
+ * first paint. The ThemeProvider overwrites them on the client once a theme
+ * (default or saved) is resolved, and an inline script in layout.tsx applies a
+ * saved theme before paint to avoid any flash.
+ */
+:root {
+  --color-bg: #fbf4ea;
+  --color-surface: #f7eee1;
+  --color-surface-alt: #ffffff;
+  --color-text: #1b1b1b;
+  --color-text-muted: #6b6256;
+  --color-primary: #f5a623;
+  --color-primary-text: #1b1b1b;
+  --color-accent: #38b6c4;
+  --color-frame: #fbc54e;
+  --color-border: #eadfcf;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hand-drawn style underline used under headline words (Ali Abdaal style). */
+.accent-underline {
+  position: relative;
+  display: inline-block;
+}
+.accent-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.15em;
+  height: 0.18em;
+  border-radius: 9999px;
+  background-color: var(--color-accent);
+  opacity: 0.85;
+}

@@ -1,13 +1,11 @@
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
-import { Footer } from "@/components/Footer";
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen">
+    <main className="flex min-h-[100dvh] flex-col md:min-h-screen md:block">
       <Navbar />
       <Hero />
-      <Footer />
     </main>
   );
 }

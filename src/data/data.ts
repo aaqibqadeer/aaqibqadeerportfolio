@@ -62,8 +62,6 @@ export type SiteData = {
     contactBlurb: string;
   };
   socials: SocialLink[];
-  /** Footer copy. `{year}` is replaced with the current year. */
-  footer: string;
 };
 
 export const data: SiteData = {
@@ -119,5 +117,4 @@ export const data: SiteData = {
       href: "https://www.upwork.com/freelancers/aaqibqadeer",
     },
   ],
-  footer: "© {year} Aaqib Qadeer. Built with Next.js.",
 };

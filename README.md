@@ -1,8 +1,7 @@
 # Aaqib Qadeer — Portfolio
 
 A personal portfolio website built with **Next.js (App Router)**, **TypeScript**,
-and **Tailwind CSS**. Styling is inspired by the warm, friendly look of
-[aliabdaal.com](https://aliabdaal.com).
+and **Tailwind CSS**.
 
 ## Pages
 

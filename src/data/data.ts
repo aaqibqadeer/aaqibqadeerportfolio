@@ -60,6 +60,8 @@ export type SiteData = {
     contactHeading: string;
     /** Supporting copy under the contact heading. */
     contactBlurb: string;
+    /** Label for the prominent "Ask Aaqib AI" button on the homepage. */
+    aiCtaLabel: string;
   };
   socials: SocialLink[];
   about: AboutContent;
@@ -170,6 +172,11 @@ export const data: SiteData =
         label:
           'Portfolio',
         href: '/portfolio'
+      },
+      {
+        label:
+          'AaqibAI',
+        href: '/AskAaqibAI'
       }
     ],
     navCta:
@@ -196,7 +203,9 @@ export const data: SiteData =
       contactHeading:
         'Let’s build something',
       contactBlurb:
-        'Whether you have a project in mind, a role to fill, or just want to say hi — my inbox is always open. I’ll do my best to get back to you.'
+        'Whether you have a project in mind, a role to fill, or just want to say hi — my inbox is always open. I’ll do my best to get back to you.',
+      aiCtaLabel:
+        'Ask about me from Aaqib AI'
     },
     socials:
       [

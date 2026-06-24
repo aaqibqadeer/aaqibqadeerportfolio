@@ -1,12 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type {
   AboutSlide,
   Project,
   SiteData,
   SocialLink,
 } from "@/data/data";
+
+type TabId = "general" | "home" | "socials" | "about" | "portfolio";
+
+const TABS: { id: TabId; label: string }[] = [
+  { id: "general", label: "General" },
+  { id: "home", label: "Homepage" },
+  { id: "socials", label: "Socials" },
+  { id: "about", label: "About" },
+  { id: "portfolio", label: "Portfolio" },
+];
 
 const SOCIAL_IDS: SocialLink["id"][] = [
   "linkedin",
@@ -127,9 +137,17 @@ export function AdminEditor({
   dbConfigured: boolean;
 }) {
   const [data, setData] = useState<SiteData>(initial);
+  const [tab, setTab] = useState<TabId>("general");
   const [status, setStatus] = useState<
     { type: "idle" | "saving" | "ok" | "error"; message?: string }
   >({ type: "idle" });
+
+  // Auto-dismiss the success/failure alert after a few seconds.
+  useEffect(() => {
+    if (status.type !== "ok" && status.type !== "error") return;
+    const t = setTimeout(() => setStatus({ type: "idle" }), 4000);
+    return () => clearTimeout(t);
+  }, [status]);
 
   /* generic patchers */
   const patchSocial = (i: number, fn: (s: SocialLink) => SocialLink) =>
@@ -181,7 +199,39 @@ export function AdminEditor({
         </div>
       )}
 
-      {/* General */}
+      {/* Save alert */}
+      {(status.type === "ok" || status.type === "error") && (
+        <div
+          role="alert"
+          className={`fixed left-1/2 top-4 z-50 -translate-x-1/2 rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-lg ${
+            status.type === "ok" ? "bg-green-600" : "bg-red-600"
+          }`}
+        >
+          {status.type === "ok" ? "✓ " : "⚠ "}
+          {status.message}
+        </div>
+      )}
+
+      {/* Section tabs */}
+      <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
+        {TABS.map((t) => (
+          <button
+            key={t.id}
+            type="button"
+            onClick={() => setTab(t.id)}
+            aria-pressed={tab === t.id}
+            className={`shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
+              tab === t.id
+                ? "bg-primary text-primary-text"
+                : "border border-border bg-surface text-text-muted hover:text-text"
+            }`}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+
+      {tab === "general" && (
       <Section title="General">
         <Field
           label="Brand / name"
@@ -220,7 +270,9 @@ export function AdminEditor({
         </div>
       </Section>
 
-      {/* Home */}
+      )}
+
+      {tab === "home" && (
       <Section title="Homepage">
         <Field
           label="Greeting"
@@ -289,9 +341,18 @@ export function AdminEditor({
             setData((d) => ({ ...d, home: { ...d.home, contactBlurb: v } }))
           }
         />
+        <Field
+          label="Ask-AI button label"
+          value={data.home.aiCtaLabel ?? ""}
+          onChange={(v) =>
+            setData((d) => ({ ...d, home: { ...d.home, aiCtaLabel: v } }))
+          }
+        />
       </Section>
 
-      {/* Socials */}
+      )}
+
+      {tab === "socials" && (
       <Section title="Social links">
         {data.socials.map((s, i) => (
           <div
@@ -367,7 +428,9 @@ export function AdminEditor({
         </button>
       </Section>
 
-      {/* About */}
+      )}
+
+      {tab === "about" && (
       <Section title="About — slides">
         <Field
           label="About heading"
@@ -490,7 +553,9 @@ export function AdminEditor({
         </button>
       </Section>
 
-      {/* Portfolio */}
+      )}
+
+      {tab === "portfolio" && (
       <Section title="Portfolio — projects">
         <Field
           label="Portfolio heading"
@@ -778,6 +843,7 @@ export function AdminEditor({
           + Add project
         </button>
       </Section>
+      )}
 
       {/* Sticky save bar */}
       <div className="fixed inset-x-0 bottom-0 border-t border-border bg-surface/95 backdrop-blur">

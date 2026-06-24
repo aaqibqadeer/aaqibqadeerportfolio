@@ -9,14 +9,8 @@ export function Navbar() {
   const data = useContent();
   return (
     <header className="w-full">
-      <nav className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-4 md:py-6">
-        <Link
-          href="/"
-          className="font-display text-2xl font-semibold tracking-tight"
-        >
-          {data.brand}
-        </Link>
-
+      {/* The name lives as a wordmark in the hero, not in the header. */}
+      <nav className="mx-auto flex max-w-6xl flex-wrap items-center justify-end gap-4 px-6 py-4 md:py-6">
         {/* On mobile the nav links, theme switcher and CTA are hidden to keep
             the homepage scroll-free; their actions move into MobileActions. */}
         <div className="hidden flex-wrap items-center gap-6 md:flex">

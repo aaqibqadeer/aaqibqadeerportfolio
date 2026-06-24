@@ -6,9 +6,9 @@ import { useContent } from "./ContentProvider";
 import { icons } from "./Icons";
 
 /**
- * Mobile-only block shown under the photo + description.
+ * Mobile-only block shown under the photo + description (below the AI button).
  *
- * Layout: a dominant "About me" button, with "Portfolio" and "Contact" below.
+ * Layout: a row of three buttons — About me, Portfolio, and Contact.
  * "Contact" opens a bottom sheet listing every social link (and email).
  *
  * Hidden on md+ where the full navbar and contact card take over.
@@ -36,31 +36,27 @@ export function MobileActions() {
 
   return (
     <div className="md:hidden">
-      <div className="mt-7 flex flex-col gap-3">
-        {/* Dominant primary action */}
+      {/* Second row: the three previous actions, equally weighted */}
+      <div className="mt-3 grid grid-cols-3 gap-3">
         <Link
           href="/about"
-          className="rounded-2xl bg-primary px-6 py-4 text-center text-base font-bold text-primary-text shadow-sm transition-transform hover:scale-[1.02]"
+          className="rounded-2xl border border-border bg-surface-alt px-3 py-3 text-center text-sm font-semibold text-text transition-colors hover:border-accent"
         >
           About me
         </Link>
-
-        {/* Two secondary actions */}
-        <div className="grid grid-cols-2 gap-3">
-          <Link
-            href="/portfolio"
-            className="rounded-2xl border border-border bg-surface-alt px-5 py-3 text-center text-sm font-semibold text-text transition-colors hover:border-accent"
-          >
-            Portfolio
-          </Link>
-          <button
-            type="button"
-            onClick={() => setOpen(true)}
-            className="rounded-2xl border border-border bg-surface-alt px-5 py-3 text-center text-sm font-semibold text-text transition-colors hover:border-accent"
-          >
-            Contact
-          </button>
-        </div>
+        <Link
+          href="/portfolio"
+          className="rounded-2xl border border-border bg-surface-alt px-3 py-3 text-center text-sm font-semibold text-text transition-colors hover:border-accent"
+        >
+          Portfolio
+        </Link>
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          className="rounded-2xl border border-border bg-surface-alt px-3 py-3 text-center text-sm font-semibold text-text transition-colors hover:border-accent"
+        >
+          Contact
+        </button>
       </div>
 
       {open && (

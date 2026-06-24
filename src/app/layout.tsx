@@ -4,6 +4,8 @@ import "./globals.css";
 import { themes, defaultThemeId } from "@/themes/themes";
 import { ThemeProvider } from "@/themes/ThemeProvider";
 import { ContentProvider } from "@/components/ContentProvider";
+import { AnalyticsTracker } from "@/components/AnalyticsTracker";
+import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { getSiteData } from "@/lib/content";
 
 const inter = Inter({
@@ -70,6 +72,8 @@ export default async function RootLayout({
         <ContentProvider content={content}>
           <ThemeProvider>{children}</ThemeProvider>
         </ContentProvider>
+        <AnalyticsTracker />
+        <GoogleAnalytics />
       </body>
     </html>
   );

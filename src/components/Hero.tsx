@@ -1,11 +1,21 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useContent } from "./ContentProvider";
 import { useTheme } from "@/themes/ThemeProvider";
 import { Socials } from "./Socials";
 import { icons } from "./Icons";
 import { MobileActions } from "./MobileActions";
+
+/** Small sparkle/AI glyph for the Aaqib AI button. */
+function SparkleIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
+      <path d="M12 2l1.6 5.2L19 9l-5.4 1.8L12 16l-1.6-5.2L5 9l5.4-1.8L12 2zM19 14l.8 2.4L22 17l-2.2.7L19 20l-.8-2.3L16 17l2.2-.6L19 14zM5 14l.8 2.4L8 17l-2.2.7L5 20l-.8-2.3L2 17l2.2-.6L5 14z" />
+    </svg>
+  );
+}
 
 /** The photo + its frame, whose style changes per theme. */
 function PhotoFrame({
@@ -98,7 +108,11 @@ export function Hero() {
 
           {/* Intro copy */}
           <div className="text-center md:text-left">
-            <h1 className="font-display text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl">
+            {/* Name wordmark (moved out of the header) */}
+            <p className="font-display text-3xl font-bold tracking-tight text-text sm:text-4xl">
+              {data.brand}
+            </p>
+            <h1 className="mt-2 font-display text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl">
               <span className="accent-underline">{home.greeting}</span>
             </h1>
             <p className="mt-5 text-lg leading-relaxed text-text sm:text-xl md:mt-6 md:text-2xl">
@@ -106,7 +120,18 @@ export function Hero() {
               {home.intro}
             </p>
 
-            {/* Mobile-only action buttons + contact sheet */}
+            {/* Prominent "Ask Aaqib AI" button — visible on every screen size */}
+            <div className="mt-7 flex justify-center md:justify-start">
+              <Link
+                href="/AskAaqibAI"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-6 py-4 text-base font-bold text-primary-text shadow-sm transition-transform hover:scale-[1.02] sm:w-auto"
+              >
+                <SparkleIcon className="h-5 w-5" />
+                {home.aiCtaLabel ?? "Ask about me from Aaqib AI"}
+              </Link>
+            </div>
+
+            {/* Mobile-only secondary action row + contact sheet */}
             <MobileActions />
           </div>
         </div>
